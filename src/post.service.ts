@@ -6,13 +6,13 @@ import { PrismaService } from "./prisma.service";
 export class PostService {
   constructor(private readonly prisma: PrismaService) { }
 
-  async post(PostWhereUniqueInput: Prisma.PostWhereUniqueInput): Promise<Post | null> {
+  async getPost(PostWhereUniqueInput: Prisma.PostWhereUniqueInput): Promise<Post | null> {
     return this.prisma.post.findUnique({
       where: PostWhereUniqueInput
     })
   }
 
-  async Posts(params: {
+  async getPosts(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.PostWhereUniqueInput;
