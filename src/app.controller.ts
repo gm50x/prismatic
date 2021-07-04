@@ -51,19 +51,20 @@ export class AppController {
   async getFilteredPosts(
     @Param('searchString') searchString,
   ): Promise<PostModel[]> {
-    console.log('we got here', searchString)
     return this.postService.Posts({
       where: {
         OR: [
           {
             title: {
-              contains: searchString
+              contains: searchString,
+              mode: 'insensitive'
             },
             published: true
           },
           {
             content: {
-              contains: searchString
+              contains: searchString,
+              mode: 'insensitive'
             },
             published: true
           },
