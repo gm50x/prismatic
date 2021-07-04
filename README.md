@@ -5,7 +5,7 @@ A NestJS Prisma example.
 You can reproduce this by following Nest's official documentation https://docs.nestjs.com/recipes/prisma.
 
 
-## Creating and run a migration
+## Create and run a migration on development
 ```bash
 npx prisma migrate dev --name init
 ```
