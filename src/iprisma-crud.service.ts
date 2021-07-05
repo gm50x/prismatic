@@ -1,5 +1,5 @@
 export interface IPrismaCrud<T> {
-  getAll(params: {
+  getAll(params?: {
     skip?: number;
     take?: number;
     cursor?: any;

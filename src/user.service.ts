@@ -13,7 +13,7 @@ export class UserService implements IPrismaCrud<User> {
     cursor?: Prisma.UserWhereUniqueInput;
     where?: Prisma.UserWhereInput;
     orderBy?: Prisma.UserOrderByInput;
-  }): Promise<User[]> {
+  } = {}): Promise<User[]> {
     const { skip, take, cursor, where, orderBy } = params || {};
     return this.prisma.user.findMany({
       skip, take, cursor, where, orderBy

@@ -9,6 +9,8 @@ import { CommentService } from './comment.service';
 
 import { UsersResolver } from './graphql/resolvers/users.resolver';
 import { CommentsResolver } from './graphql/resolvers/comments.resolver';
+import { PostCategoryService } from './post-category.service';
+import { PostsResolver } from './graphql/resolvers/posts.resolver';
 
 @Module({
   imports: [
@@ -26,9 +28,12 @@ import { CommentsResolver } from './graphql/resolvers/comments.resolver';
     PrismaService,
     UserService,
     PostService,
+    PostCategoryService,
     CommentService,
-    CommentsResolver,
+
     UsersResolver,
+    PostsResolver,
+    CommentsResolver,
   ],
 })
 export class AppModule { }

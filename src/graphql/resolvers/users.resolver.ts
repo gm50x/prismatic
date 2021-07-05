@@ -18,11 +18,6 @@ export class UsersResolver extends BaseResolver(User) {
     super(userService);
   }
 
-  @Query(returns => User, { name: 'user', description: 'Queries for the Users and their related data' })
-  async getAuthor(@Args('id', { type: () => Int }) id: number) {
-    return this.userService.user({ id });
-  }
-
   @ResolveField()
   async posts(@Parent() user: User) {
     const { id } = user;

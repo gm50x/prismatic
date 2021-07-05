@@ -1,14 +1,33 @@
+import { IPrismaCrud } from './../../iprisma-crud.service';
 import { Type } from "@nestjs/common";
-import { Resolver, Query } from "@nestjs/graphql";
+import { Resolver, Query, Int, Args } from "@nestjs/graphql";
 
-export function BaseResolver<T extends Type<unknown>>(classRef: T): any {
+export function BaseResolver<T extends Type<unknown>>(classRef: T, classIdType = Int): any {
   @Resolver({ isAbstract: true })
   abstract class BaseResolverHost {
-    constructor(private readonly service: any) { }
-    @Query(returns => [classRef], { name: `findAll${classRef.name}` })
-    async findAll(): Promise<T[]> {
+    constructor(private readonly service: IPrismaCrud<T>) { }
+    @Query(
+      returns => [classRef],
+      {
+        name: `getAll${classRef.name}`,
+        description: `Get a list of ${classRef.name}`
+      }
+    )
+    async getAll(): Promise<T[]> {
       return this.service.getAll()
-      return []
+    }
+
+    @Query(
+      returns => classRef,
+      {
+        name: `getOne${classRef.name}`,
+        description: `Get one ${classRef.name}`
+      }
+    )
+    async getOne(
+      @Args('id', { type: () => classIdType }) id: number,
+    ): Promise<T | null> {
+      return this.service.getOne({ id })
     }
   }
 
