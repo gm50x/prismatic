@@ -9,7 +9,7 @@ export function BaseResolver<T extends Type<unknown>>(
 ): any {
   @Resolver({ isAbstract: true })
   abstract class BaseResolverHost {
-    constructor(private readonly service: IPrismaCrud<T>) { }
+    constructor(private readonly service: IPrismaCrud<T>) {}
     @Query((returns) => [classRef], {
       name: `getAll${classRef.name}`,
       description: `Get a list of ${classRef.name}`,

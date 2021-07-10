@@ -6,7 +6,7 @@ import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class PostCategoryService implements IPrismaCrud<PostCategory> {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async getOne(
     postCategoryWhereUniqueInput: Prisma.CommentWhereUniqueInput,

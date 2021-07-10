@@ -17,6 +17,9 @@ export class Post {
   @Field({ nullable: true })
   published?: boolean;
 
+  @Field((type) => Int, { nullable: true })
+  upvotes: number;
+
   @Field((type) => User)
   author: User;
 

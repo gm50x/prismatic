@@ -6,7 +6,20 @@ import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class PostService implements IPrismaCrud<Post> {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
+
+  async upvoteById({ id }: { id: number }) {
+    const post = await this.getPost({ id });
+    const upvotes = post.upvotes + 1;
+    const newData = { ...post, upvotes };
+
+    await this.update({
+      where: { id },
+      data: newData,
+    });
+
+    return newData;
+  }
 
   async getPost(
     PostWhereUniqueInput: Prisma.PostWhereUniqueInput,

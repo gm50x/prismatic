@@ -38,4 +38,4 @@ import { AppController } from '@prismatic/routers';
     CommentsResolver,
   ],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,4 +1,11 @@
-import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Int,
+  Mutation,
+  Parent,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 
 import {
   CommentService,
@@ -19,6 +26,34 @@ export class PostsResolver extends BaseResolver(Post) {
     private readonly commentService: CommentService,
   ) {
     super(postService);
+  }
+
+  @Mutation((returns) => Post, { name: 'upvotePost' })
+  async upvotePost(@Args({ name: 'id', type: () => Int }) id: number) {
+    return this.postService.upvoteById({ id });
+  }
+
+  @Mutation((returns) => Post, { name: 'createPost' })
+  async createPost(
+    @Args({ name: 'title' }) title: string,
+    @Args({ name: 'content' }) content: string,
+    @Args({ name: 'category', type: () => Int }) category: number,
+    @Args({ name: 'authorEmail' }) authorEmail: string,
+  ) {
+    return this.postService.create({
+      title,
+      content,
+      author: {
+        connect: {
+          email: authorEmail,
+        },
+      },
+      category: {
+        connect: {
+          id: category,
+        },
+      },
+    });
   }
 
   @ResolveField()

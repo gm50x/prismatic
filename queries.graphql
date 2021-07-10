@@ -1,0 +1,29 @@
+query { 
+  getOneUser(id:1) {
+    id, name, email,
+    posts {
+      id, title,
+      comments {
+        id, title,
+        author {
+          id, name, email
+        }
+      }
+    },
+    comments {
+      id, title,
+      post {
+        id, title
+      }
+    }
+  },
+  getAllUser {
+    id, name, email
+  }
+}
+
+mutation {
+  upvotePost(id:1) {
+    id, title, upvotes
+  }
+}

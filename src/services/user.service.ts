@@ -6,7 +6,7 @@ import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class UserService implements IPrismaCrud<User> {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   getAll(
     params: {

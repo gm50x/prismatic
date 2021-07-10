@@ -2,7 +2,7 @@ import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { PostService, UserService, CommentService } from '@prismatic/services';
 import { Comment } from '@prismatic/graphql/models';
-import { BaseResolver } from './base.resolver'
+import { BaseResolver } from './base.resolver';
 
 @Resolver((of) => Comment)
 export class CommentsResolver extends BaseResolver(Comment) {

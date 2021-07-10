@@ -36,6 +36,7 @@ model Post {
   categoryId Int
   category   PostCategory @relation(fields: [categoryId], references: [id])
   comments   Comment[]
+  upvotes    Int          @default(0)
 }
 
 model Comment {
