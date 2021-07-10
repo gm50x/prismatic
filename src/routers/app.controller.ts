@@ -6,9 +6,7 @@ import {
   Comment as CommentModel,
 } from '@prisma/client';
 
-import { PostService } from './post.service';
-import { UserService } from './user.service';
-import { CommentService } from './comment.service';
+import { PostService, UserService, CommentService } from '@prismatic/services';
 
 @Controller('api/v1')
 export class AppController {
@@ -16,15 +14,15 @@ export class AppController {
     private readonly userService: UserService,
     private readonly postService: PostService,
     private readonly commentService: CommentService,
-  ) { }
+  ) {}
 
   @Post('users')
   async signupUser(
-    @Body() userData: { name?: string, email: string }
+    @Body() userData: { name?: string; email: string },
   ): Promise<UserModel> {
     return this.userService.createUser({
       ...userData,
-      password: 'Password@123'
+      password: 'Password@123',
     });
   }
 
@@ -42,27 +40,27 @@ export class AppController {
 
   @Get('unpublished/:authorEmail')
   async getUnpublishedPosts(
-    @Param('authorEmail') authorEmail: string
+    @Param('authorEmail') authorEmail: string,
   ): Promise<PostModel[]> {
     return this.postService.getPosts({
       where: {
         published: false,
         author: {
           email: authorEmail,
-        }
+        },
       },
     });
   }
 
   @Get('posts/:authorEmail')
   async getAuthorsPosts(
-    @Param('authorEmail') authorEmail: string
+    @Param('authorEmail') authorEmail: string,
   ): Promise<PostModel[]> {
     return this.postService.getPosts({
       where: {
         author: {
           email: authorEmail,
-        }
+        },
       },
     });
   }
@@ -77,29 +75,30 @@ export class AppController {
           {
             title: {
               contains: searchString,
-              mode: 'insensitive'
+              mode: 'insensitive',
             },
-            published: true
+            published: true,
           },
           {
             content: {
               contains: searchString,
-              mode: 'insensitive'
+              mode: 'insensitive',
             },
-            published: true
+            published: true,
           },
-        ]
-      }
+        ],
+      },
     });
   }
 
   @Post('posts')
   async createDraft(
-    @Body() postData: {
-      title: string,
-      content?: string,
-      authorEmail: string,
-      category: number
+    @Body()
+    postData: {
+      title: string;
+      content?: string;
+      authorEmail: string;
+      category: number;
     },
   ): Promise<PostModel> {
     const { title, content, authorEmail, category } = postData;
@@ -108,14 +107,14 @@ export class AppController {
       content,
       author: {
         connect: {
-          email: authorEmail
-        }
+          email: authorEmail,
+        },
       },
       category: {
         connect: {
-          id: category
-        }
-      }
+          id: category,
+        },
+      },
     });
   }
 
@@ -123,7 +122,7 @@ export class AppController {
   async publishPost(@Param('id') id: string): Promise<PostModel> {
     return this.postService.updatePost({
       where: { id: Number(id) },
-      data: { published: true }
+      data: { published: true },
     });
   }
 
@@ -134,12 +133,13 @@ export class AppController {
 
   @Post('comments')
   async addPostComment(
-    @Body() commentData: {
-      title: string,
-      content?: string,
-      authorEmail: string,
-      postId: number
-    }
+    @Body()
+    commentData: {
+      title: string;
+      content?: string;
+      authorEmail: string;
+      postId: number;
+    },
   ): Promise<CommentModel> {
     const { title, content, authorEmail, postId } = commentData;
     return this.commentService.createComment({
@@ -148,27 +148,25 @@ export class AppController {
       post: {
         connect: {
           id: postId,
-        }
+        },
       },
       author: {
         connect: {
           email: authorEmail,
-        }
-      }
+        },
+      },
     });
   }
 
   @Get('posts/:id/comments')
-  async getPostsComments(
-    @Param('id') id: number,
-  ) {
+  async getPostsComments(@Param('id') id: number) {
     return this.commentService.getComments({
       where: {
         post: {
           id: Number(id),
           author: {
-            email: 'getuliomagela@outlook.com'
-          }
+            email: 'getuliomagela@outlook.com',
+          },
         },
       },
     });

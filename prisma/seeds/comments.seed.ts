@@ -5,7 +5,7 @@ export const comments: Prisma.CommentCreateInput[] = [
     content: 'I really liked the way you talked about the subject! You\'re a born writer!',
     author: {
       connect: {
-        email: 'getuliomagela@outlook.com'
+        email: 'kratos@gow.com'
       }
     },
     post: {
@@ -19,7 +19,7 @@ export const comments: Prisma.CommentCreateInput[] = [
     content: 'I really liked the way you talked about the subject! You\'re a born writer!',
     author: {
       connect: {
-        email: 'getuliomagela@outlook.com'
+        email: 'nate@uncharted.com'
       }
     },
     post: {
@@ -33,7 +33,7 @@ export const comments: Prisma.CommentCreateInput[] = [
     content: 'I really liked the way you talked about the subject! You\'re a born writer!',
     author: {
       connect: {
-        email: 'getuliomagela@outlook.com'
+        email: 'nate@uncharted.com'
       }
     },
     post: {

@@ -5,24 +5,24 @@ import { Comment } from './comment.model';
 
 @ObjectType()
 export class Post {
-  @Field(type => Int)
-  id: number
+  @Field((type) => Int)
+  id: number;
 
   @Field()
-  title: string
+  title: string;
 
   @Field({ nullable: true })
-  content?: string
+  content?: string;
 
   @Field({ nullable: true })
-  published?: boolean
+  published?: boolean;
 
-  @Field(type => User)
-  author: User
+  @Field((type) => User)
+  author: User;
 
-  @Field(type => PostCategory)
-  category: PostCategory
+  @Field((type) => PostCategory)
+  category: PostCategory;
 
-  @Field(type => [Comment])
-  comments: Comment[]
+  @Field((type) => [Comment])
+  comments: Comment[];
 }

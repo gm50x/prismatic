@@ -1,10 +1,10 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql"
-import { Post } from "./post.model"
-import { User } from "./user.model"
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Post } from './post.model';
+import { User } from './user.model';
 
 @ObjectType()
 export class Comment {
-  @Field(type => Int)
+  @Field((type) => Int)
   id: number;
 
   @Field()
@@ -13,9 +13,9 @@ export class Comment {
   @Field({ nullable: true })
   content?: string;
 
-  @Field(type => User)
+  @Field((type) => User)
   author: User;
 
-  @Field(type => Post)
+  @Field((type) => Post)
   post: Post;
 }

@@ -1,12 +1,16 @@
-import { Parent, ResolveField, Resolver } from "@nestjs/graphql";
-import { CommentService } from "src/comment.service";
-import { PostCategoryService } from "src/post-category.service";
-import { PostService } from "src/post.service";
-import { UserService } from "src/user.service";
-import { Post } from "../models/post.model";
-import { BaseResolver } from "./base.resolver";
+import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
-@Resolver(of => Post)
+import {
+  CommentService,
+  PostService,
+  PostCategoryService,
+  UserService,
+} from '@prismatic/services';
+
+import { Post } from '@prismatic/graphql/models';
+import { BaseResolver } from './base.resolver';
+
+@Resolver((of) => Post)
 export class PostsResolver extends BaseResolver(Post) {
   constructor(
     private readonly postService: PostService,
@@ -20,13 +24,15 @@ export class PostsResolver extends BaseResolver(Post) {
   @ResolveField()
   async author(@Parent() post: Post) {
     const { id } = post;
-    return this.userService.getAll({
-      where: {
-        posts: {
-          some: { id }
-        }
-      },
-    }).then(res => res.shift());
+    return this.userService
+      .getAll({
+        where: {
+          posts: {
+            some: { id },
+          },
+        },
+      })
+      .then((res) => res.shift());
   }
 
   @ResolveField()
@@ -36,7 +42,7 @@ export class PostsResolver extends BaseResolver(Post) {
       where: {
         post: { id },
       },
-    })
+    });
   }
 
   @ResolveField()

@@ -1,14 +1,10 @@
-import { Args, Int, Resolver, Query, ResolveField, Parent } from "@nestjs/graphql";
-import { User } from "../models/user.model";
-import { Comment } from "../models/comment.model";
-import { Post } from "../models/post.model";
+import { Resolver, ResolveField, Parent } from '@nestjs/graphql';
 
-import { UserService } from '../../user.service'
-import { PostService } from "src/post.service";
-import { CommentService } from "src/comment.service";
-import { BaseResolver } from "./base.resolver";
+import { UserService, PostService, CommentService } from '@prismatic/services';
+import { User } from '@prismatic/graphql/models';
+import { BaseResolver } from './base.resolver';
 
-@Resolver(of => User)
+@Resolver((of) => User)
 export class UsersResolver extends BaseResolver(User) {
   constructor(
     private readonly userService: UserService,
@@ -35,6 +31,6 @@ export class UsersResolver extends BaseResolver(User) {
       where: {
         author: { id },
       },
-    })
+    });
   }
 }

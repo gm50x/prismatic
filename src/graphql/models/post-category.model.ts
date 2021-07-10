@@ -1,8 +1,8 @@
-import { Field, Int, ObjectType } from "@nestjs/graphql"
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class PostCategory {
-  @Field(type => Int)
+  @Field((type) => Int)
   id: number;
 
   @Field()

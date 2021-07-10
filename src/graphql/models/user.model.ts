@@ -4,8 +4,7 @@ import { Comment } from './comment.model';
 
 @ObjectType()
 export class User {
-
-  @Field(type => Int)
+  @Field((type) => Int)
   id: number;
 
   @Field({ nullable: true })
@@ -17,9 +16,9 @@ export class User {
   @Field()
   name: string;
 
-  @Field(type => [Post])
+  @Field((type) => [Post])
   posts: Post[];
 
-  @Field(type => [Comment])
+  @Field((type) => [Comment])
   comments: Post[];
 }
