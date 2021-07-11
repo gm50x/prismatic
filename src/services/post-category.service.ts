@@ -6,7 +6,38 @@ import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class PostCategoryService implements IPrismaCrud<PostCategory> {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
+
+  async count(params?: { where: Prisma.PostCategoryWhereInput }) {
+    return this.prisma.postCategory.count(params);
+  }
+
+  async getEdges(params?: {
+    where?: Prisma.PostCategoryWhereInput,
+    orderBy?: Prisma.PostCategoryOrderByInput
+  }) {
+    const { where } = params || {}
+    const { orderBy } = params || {}
+
+    const firstEdgeParams = {
+      where, orderBy
+    }
+
+    if (!orderBy) {
+      firstEdgeParams.orderBy = { id: 'asc' }
+    }
+
+    const lastEdgeParams = { ...firstEdgeParams };
+
+    for (const [key, val] of Object.entries(lastEdgeParams.orderBy)) {
+      lastEdgeParams.orderBy[key] = val === 'asc' ? 'desc' : 'asc';
+    }
+
+    return Promise.all([
+      this.prisma.postCategory.findFirst(firstEdgeParams),
+      this.prisma.postCategory.findFirst(lastEdgeParams),
+    ]);
+  }
 
   async getOne(
     postCategoryWhereUniqueInput: Prisma.CommentWhereUniqueInput,

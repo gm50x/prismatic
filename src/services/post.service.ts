@@ -6,7 +6,7 @@ import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class PostService implements IPrismaCrud<Post> {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async upvoteById({ id }: { id: number }) {
     const post = await this.getPost({ id });
@@ -34,6 +34,40 @@ export class PostService implements IPrismaCrud<Post> {
     return this.prisma.post.findUnique({
       where: PostWhereUniqueInput,
     });
+  }
+
+  async count(params: { where: Prisma.PostWhereInput }) {
+    return this.prisma.post.count(params);
+  }
+
+  async getEdges(params?: {
+    where?: Prisma.PostWhereInput,
+    orderBy?: Prisma.PostOrderByInput
+  }) {
+    const { where } = params || {}
+    const { orderBy } = params || {}
+
+    const firstEdgeParams = {
+      where, orderBy
+    }
+
+    if (!orderBy) {
+      firstEdgeParams.orderBy = { id: 'asc' }
+    }
+
+    const lastEdgeParams = {
+      where: { ...firstEdgeParams.where },
+      orderBy: { ...firstEdgeParams.orderBy }
+    };
+
+    for (const [key, val] of Object.entries(lastEdgeParams.orderBy)) {
+      lastEdgeParams.orderBy[key] = val === 'asc' ? 'desc' : 'asc';
+    }
+
+    return Promise.all([
+      this.prisma.post.findFirst(firstEdgeParams),
+      this.prisma.post.findFirst(lastEdgeParams),
+    ]);
   }
 
   async getAll(

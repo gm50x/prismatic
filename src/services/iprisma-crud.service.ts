@@ -10,4 +10,9 @@ export interface IPrismaCrud<T> {
   create(data: any): Promise<T>;
   update(params: { where: any; data: any }): Promise<T>;
   delete(params: any): Promise<T>;
+  count(params?: { where?: any; });
+  getEdges(params?: {
+    where?: any;
+    orderBy?: any;
+  }): Promise<T[]>
 }

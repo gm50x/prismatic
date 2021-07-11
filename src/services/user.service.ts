@@ -6,9 +6,40 @@ import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class UserService implements IPrismaCrud<User> {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
-  getAll(
+  async count(params?: { where: Prisma.UserWhereInput }) {
+    return this.prisma.user.count(params)
+  }
+
+  async getEdges(params?: {
+    where?: Prisma.UserWhereInput,
+    orderBy?: Prisma.UserOrderByInput
+  }) {
+    const { where } = params || {}
+    const { orderBy } = params || {}
+
+    const firstEdgeParams = {
+      where, orderBy
+    }
+
+    if (!orderBy) {
+      firstEdgeParams.orderBy = { id: 'asc' }
+    }
+
+    const lastEdgeParams = { ...firstEdgeParams };
+
+    for (const [key, val] of Object.entries(lastEdgeParams.orderBy)) {
+      lastEdgeParams.orderBy[key] = val === 'asc' ? 'desc' : 'asc';
+    }
+
+    return Promise.all([
+      this.prisma.user.findFirst(firstEdgeParams),
+      this.prisma.user.findFirst(lastEdgeParams),
+    ]);
+  }
+
+  async getAll(
     params: {
       skip?: number;
       take?: number;

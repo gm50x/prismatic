@@ -7,7 +7,7 @@ export function Paginated<T>(classRef: Type<T>): any {
     @Field((type) => String)
     cursor: string;
 
-    @Field((type) => [classRef], { nullable: true })
+    @Field((type) => classRef, { nullable: true })
     node: T;
   }
 
